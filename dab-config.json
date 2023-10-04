@@ -1,0 +1,423 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v0.8.50/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('MSSQL')",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api"
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "SalesOrderDetail": {
+        "source": "[SalesLT].[SalesOrderDetail]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "Product": {
+                "cardinality": "one",
+                "target.entity": "Product",
+                "source.fields": [
+                    "ProductID"
+                ],
+                "target.fields": [
+                    "ProductID"
+                ]
+            },
+            "SalesOrderHeader": {
+                "cardinality": "one",
+                "target.entity": "SalesOrderHeader",
+                "source.fields": [
+                    "SalesOrderID"
+                ],
+                "target.fields": [
+                    "SalesOrderID"
+                ]
+            }
+        }
+    },
+    "SalesOrderHeader": {
+        "source": "[SalesLT].[SalesOrderHeader]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "BillToAddress": {
+                "cardinality": "one",
+                "target.entity": "Address",
+                "source.fields": [
+                    "BillToAddressID"
+                ],
+                "target.fields": [
+                    "AddressID"
+                ]
+            },
+            "ShipToAddress": {
+                "cardinality": "one",
+                "target.entity": "Address",
+                "source.fields": [
+                    "ShipToAddressID"
+                ],
+                "target.fields": [
+                    "AddressID"
+                ]
+            },
+            "Customer": {
+                "cardinality": "one",
+                "target.entity": "Customer",
+                "source.fields": [
+                    "CustomerID"
+                ],
+                "target.fields": [
+                    "CustomerID"
+                ]
+            },
+            "SalesOrderDetail": {
+                "cardinality": "many",
+                "target.entity": "SalesOrderDetail",
+                "source.fields": [
+                    "SalesOrderID"
+                ],
+                "target.fields": [
+                    "SalesOrderID"
+                ]
+            }
+        }
+    },
+    "Customer": {
+        "source": "[SalesLT].[Customer]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "SalesOrderHeader": {
+                "cardinality": "many",
+                "target.entity": "SalesOrderHeader",
+                "source.fields": [
+                    "CustomerID"
+                ],
+                "target.fields": [
+                    "CustomerID"
+                ]
+            },
+            "CustomerAddress": {
+                "cardinality": "many",
+                "target.entity": "CustomerAddress",
+                "source.fields": [
+                    "CustomerID"
+                ],
+                "target.fields": [
+                    "CustomerID"
+                ]
+            }
+        }
+    },
+    "ProductModel": {
+        "source": "[SalesLT].[ProductModel]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "ProductModelProductDescription": {
+                "cardinality": "many",
+                "target.entity": "ProductModelProductDescription",
+                "source.fields": [
+                    "ProductModelID"
+                ],
+                "target.fields": [
+                    "ProductModelID"
+                ]
+            },
+            "Product": {
+                "cardinality": "many",
+                "target.entity": "Product",
+                "source.fields": [
+                    "ProductModelID"
+                ],
+                "target.fields": [
+                    "ProductModelID"
+                ]
+            }
+        }
+    },
+    "ProductDescription": {
+        "source": "[SalesLT].[ProductDescription]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "ProductModelProductDescription": {
+                "cardinality": "many",
+                "target.entity": "ProductModelProductDescription",
+                "source.fields": [
+                    "ProductDescriptionID"
+                ],
+                "target.fields": [
+                    "ProductDescriptionID"
+                ]
+            }
+        }
+    },
+    "Product": {
+        "source": "[SalesLT].[Product]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "ProductCategory": {
+                "cardinality": "one",
+                "target.entity": "ProductCategory",
+                "source.fields": [
+                    "ProductCategoryID"
+                ],
+                "target.fields": [
+                    "ProductCategoryID"
+                ]
+            },
+            "ProductModel": {
+                "cardinality": "one",
+                "target.entity": "ProductModel",
+                "source.fields": [
+                    "ProductModelID"
+                ],
+                "target.fields": [
+                    "ProductModelID"
+                ]
+            },
+            "SalesOrderDetail": {
+                "cardinality": "many",
+                "target.entity": "SalesOrderDetail",
+                "source.fields": [
+                    "ProductID"
+                ],
+                "target.fields": [
+                    "ProductID"
+                ]
+            }
+        }
+    },
+    "ProductModelProductDescription": {
+        "source": "[SalesLT].[ProductModelProductDescription]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "ProductDescription": {
+                "cardinality": "one",
+                "target.entity": "ProductDescription",
+                "source.fields": [
+                    "ProductDescriptionID"
+                ],
+                "target.fields": [
+                    "ProductDescriptionID"
+                ]
+            },
+            "ProductModel": {
+                "cardinality": "one",
+                "target.entity": "ProductModel",
+                "source.fields": [
+                    "ProductModelID"
+                ],
+                "target.fields": [
+                    "ProductModelID"
+                ]
+            }
+        }
+    },
+    "ProductCategory": {
+        "source": "[SalesLT].[ProductCategory]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "Product": {
+                "cardinality": "many",
+                "target.entity": "Product",
+                "source.fields": [
+                    "ProductCategoryID"
+                ],
+                "target.fields": [
+                    "ProductCategoryID"
+                ]
+            },
+            "ProductCategory": {
+                "cardinality": "many",
+                "target.entity": "ProductCategory",
+                "source.fields": [
+                    "ProductCategoryID"
+                ],
+                "target.fields": [
+                    "ParentProductCategoryID"
+                ]
+            },
+            "ProductCategory": {
+                "cardinality": "one",
+                "target.entity": "ProductCategory",
+                "source.fields": [
+                    "ParentProductCategoryID"
+                ],
+                "target.fields": [
+                    "ProductCategoryID"
+                ]
+            }
+        }
+    },
+    "Address": {
+        "source": "[SalesLT].[Address]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "CustomerAddress": {
+                "cardinality": "many",
+                "target.entity": "CustomerAddress",
+                "source.fields": [
+                    "AddressID"
+                ],
+                "target.fields": [
+                    "AddressID"
+                ]
+            },
+            "SalesOrderHeader": {
+                "cardinality": "many",
+                "target.entity": "SalesOrderHeader",
+                "source.fields": [
+                    "AddressID"
+                ],
+                "target.fields": [
+                    "BillToAddressID"
+                ]
+            },
+            "SalesOrderHeader": {
+                "cardinality": "many",
+                "target.entity": "SalesOrderHeader",
+                "source.fields": [
+                    "AddressID"
+                ],
+                "target.fields": [
+                    "ShipToAddressID"
+                ]
+            }
+        }
+    },
+    "CustomerAddress": {
+        "source": "[SalesLT].[CustomerAddress]",
+        "permissions": [
+            {
+                "role": "anonymous",
+                "actions": [
+                    {
+                        "action": "*"
+                    }
+                ]
+            }
+        ],
+        "relationships": {
+            "Address": {
+                "cardinality": "one",
+                "target.entity": "Address",
+                "source.fields": [
+                    "AddressID"
+                ],
+                "target.fields": [
+                    "AddressID"
+                ]
+            },
+            "Customer": {
+                "cardinality": "one",
+                "target.entity": "Customer",
+                "source.fields": [
+                    "CustomerID"
+                ],
+                "target.fields": [
+                    "CustomerID"
+                ]
+            }
+        }
+    }
+}
+}
