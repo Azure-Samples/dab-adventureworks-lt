@@ -30,15 +30,17 @@ Data API builder will be executed as a Docker container in the Web App.
 
 ## Test the deployment
 
+The deployment will pull the Docker image from `mcr.microsoft.com/azure-databases/data-api-builder:latest`. Please wait a couple of minutes before testing the API, to allow the Docker image to be pulled and the container to be started.
+
 Once everything has been deployed, you can test the API by opening the following URL in a browser:
 
-```http
+```text
 http://<web-app-name>.azurewebsites.net/swagger
 ```
 
 or, for GraphQL
 
-```http
+```text
 http://<web-app-name>.azurewebsites.net/graphql
 ```
 
