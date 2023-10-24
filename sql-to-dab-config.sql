@@ -10,8 +10,13 @@ select
 into
     #t
 from 
-    sys.tables where [name] not in ('AdventureWorksDWBuildVersion', 'DatabaseLog', 'NewFactCurrencyRate')
+    sys.tables 
+where 
+    [name] not in ('AdventureWorksDWBuildVersion', 'DatabaseLog', 'NewFactCurrencyRate')
+and
+    schema_id = schema_id('SalesLT')
 ;
+
 -- select * from #t;
 
 /*
@@ -61,13 +66,34 @@ select
     entity as [target.entity],
     'many' as cardinality,
     [target.fields] as [source.fields],
-    [source.fields] as [target.fields] 
+    [source.fields] as [target.fields]    
 from 
     #r
 where   
     referenced_object_id is not null
 ;
-select * from #r;
+--select * from #r;
+
+/*
+    Add relationship name
+*/
+drop table if exists #r2;
+with cte as
+(
+    select 
+        row_number() over (partition by object_id, referenced_object_id order by referenced_object_id) as rn, 
+        * 
+    from 
+        #r
+)
+select 
+    relationship_name = [target.entity] + case when rn > 1 then cast(rn as nvarchar(2)) else N'' end,
+    * 
+into
+    #r2
+from 
+    cte;
+select * from #r2;
 
 /*
     Build relationship JSON config for each entity
@@ -77,7 +103,7 @@ select
     object_id,    
     entity,
     json_query(( '{' + (string_agg(
-        '"' + [target.entity] + '": ' + 
+        '"' + [relationship_name] + '": ' + 
             json_object(
                     'cardinality': cardinality,
                     'target.entity': [target.entity],
@@ -91,7 +117,7 @@ select
 into
     #jr
 from
-    #r
+    #r2
 group by
     object_id,
     entity
@@ -109,7 +135,7 @@ select
         'permissions': json_array(
             json_object(
                 'role': 'anonymous',
-                'actions': json_array(json_object('action':'*'))
+                'actions': json_array(json_object('action':'read'))
             )
         ),
         'relationships': json_query(isnull(r.relationships, '{}'))
