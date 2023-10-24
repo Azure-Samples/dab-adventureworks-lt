@@ -19,7 +19,13 @@ grant select on schema::SalesLT to dab_adw_user;
 
 In a Linux shell (using Linux, [WSL](https://learn.microsoft.com/windows/wsl/install) or the [Cloud Shell](https://azure.microsoft.com/get-started/azure-portal/cloud-shell/)) make sure you have [AZ CLI](https://learn.microsoft.com/cli/azure/) installed and then run the `azure-deploy.sh` script. If it is the first time you're running the script, it will create a `.env` file and then stop.
 
-Fill the `.env` file with the required values and run the script again. This will create the following resources: 
+Fill the `.env` file with the required values and run the script again. The connection string for the Azure SQL database can be found in the Azure portal, in the Azure SQL database blade, under the **Connection strings** section. Make sure to use the created `dab_adw_user`. For example:
+
+```
+MSSQL='Server=<server>.database.windows.net;Database=AdventureWorksLT;User ID=dab_adw_user;Password=2_we2KWE-1S!cca;'
+```
+
+This will create the following resources: 
 
 - Resource Group
 - Storage Account
