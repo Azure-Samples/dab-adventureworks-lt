@@ -51,7 +51,7 @@ az storage file upload --share-name config --source $DAB_CONFIG_FILE --connectio
     -o json >> log.txt
 
 echo "creating app plan '$APP_PLAN_NAME'" | tee -a log.txt
-az appservice plan create -n $APP_PLAN_NAME -g $RESOURCE_GROUP --sku P1V2 --is-linux --location $LOCATION --tags CreatedBy=$CREATEDBY \
+az appservice plan create -n $APP_PLAN_NAME -g $RESOURCE_GROUP --sku B1 --is-linux --location $LOCATION --tags CreatedBy=$CREATEDBY \
     -o json >> log.txt
 
 echo "retrieving app plan id" | tee -a log.txt
