@@ -4,7 +4,7 @@ The sample database Adventure Works LT exposed as a REST and GraphQL API via Dat
 
 ## Create database
 
-Create an Azure SQL database using the AdventureWorksLT sample database. You can follow the instructions in the following article: [Quickstart: Create a single database - Azure SQL Database](https://learn.microsoft.com/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal)
+Create an Azure SQL database using the AdventureWorksLT sample database. You can follow the instructions in the following article: [Quickstart: Create a single database - Azure SQL Database](https://learn.microsoft.com/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal). Make sure to allow Azure Service to connect to the database, by selecting **Yes** for the **Allow Azure services to access server** option.
 
 ## Create user
 
@@ -29,7 +29,7 @@ This will create the following resources:
 
 - Resource Group
 - Storage Account
-- App Service Plan (P1V2)
+- App Service Plan ([B1](https://azure.microsoft.com/en-us/pricing/details/app-service/linux/#pricing))
 - Web App
 
 Data API builder will be executed as a Docker container in the Web App.
@@ -37,6 +37,14 @@ Data API builder will be executed as a Docker container in the Web App.
 ## Test the deployment
 
 The deployment will pull the Docker image from `mcr.microsoft.com/azure-databases/data-api-builder:latest`. Please wait a couple of minutes before testing the API, to allow the Docker image to be pulled and the container to be started.
+
+You can test if the everything is up and running by running thw following command:
+
+```text
+curl https:/<web-app-name>.azurewebsites.net/ 
+```
+
+and it should return the string "Healthy". If it doesn't, wait for a few seconds and try again, as the container may still be starting.
 
 Once everything has been deployed, you can test the API by opening the following URL in a browser:
 
