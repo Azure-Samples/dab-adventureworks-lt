@@ -29,7 +29,7 @@ This will create the following resources:
 
 - Resource Group
 - Storage Account
-- App Service Plan
+- App Service Plan (P1V2)
 - Web App
 
 Data API builder will be executed as a Docker container in the Web App.
