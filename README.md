@@ -5,7 +5,7 @@ languages:
 - sql
 - tsql
 products:
-- web-apps
+- azure-app-service
 - azure-sql-database
 - sql-server
 - azure-sql-managed-instance
