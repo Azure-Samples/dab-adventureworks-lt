@@ -1,6 +1,22 @@
+---
+page_type: sample
+languages:
+- csharp
+- sql
+- tsql
+products:
+- web-apps
+- azure-sql-database
+- sql-server
+- azure-sql-managed-instance
+- azure-sqlserver-vm
+name: Data API builder: AdventureWorks LT
+description: Expose the sample database Adventure Works LT as a REST and GraphQL API via Data API builder
+---
+
 # Data API builder: AdventureWorks LT
 
-The sample database Adventure Works LT exposed as a REST and GraphQL API via Data API builder
+Expose the sample database Adventure Works LT as a REST and GraphQL API via Data API builder
 
 ## Create database
 
