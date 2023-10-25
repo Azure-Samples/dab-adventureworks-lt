@@ -10,7 +10,7 @@ products:
 - sql-server
 - azure-sql-managed-instance
 - azure-sqlserver-vm
-name: Data API builder: AdventureWorks LT
+name: AdventureWorks LT Data API builder
 description: Expose the sample database Adventure Works LT as a REST and GraphQL API via Data API builder
 ---
 
